@@ -52,27 +52,7 @@
             </div>
         </transition>
 
-        <transition-group name="fade" tag="div" @beforeEnter="before" @enter="enter" @leave="leave">
-            <div class="row d-none mb-3 align-items-center" v-for="(item, index) in products" :key="item.id" :data-index="index">
-    
-                <div v-if="item.price <= Number(maximum)">
-                    <div class="col-sm-1">
-                        <button class="btn btn-info" v-on:click="addItem(item)">+</button>
-                    </div>                
-                    <div class="col-sm-4">
-                        <img :src="item.image" :alt="item.name" class="img-fluid">
-                    </div>
-                    <div class="col">
-                        <h2>{{ item.name }}</h2>
-                        <p>{{ item.description }}</p>
-                        <!-- <div class="h3">{{ item.price | currencyFormat }}</div> -->
-                        <div class="h3">
-                            <price :value="item.price" :prefix="'Rp. '" :precision="2"></price>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition-group>
+        <product-list :products="products" :maximum="2"></product-list>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
