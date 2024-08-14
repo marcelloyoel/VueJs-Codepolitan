@@ -20,19 +20,21 @@
                     <i class="fas fa-dollar-sign"></i>
                 </button>
                 <div class="ml-2">
-                    <button class="btn btn-success btn-sm dropdown-toggle" id="dropdownCart123" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <b>cart:</b>
-                        <span class="badge badge-pill badge-success">{{ cart.length }}</span>
+                    <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <span class="badge badge-pill badge-success">{{ cartQty }}</span>
+                        <i class="fas fa-shopping-cart mx-2"></i>
+                        {{ cartTotal | currencyFormat }}
                     </button>
                 </div>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownCart">
+                <div v-if="cart.length > 0" class="dropdown-menu dropdown-menu-right collapse" aria-labelledby="dropdownCart" id="collapseExample">
                     <div v-for="(item, index) in cart" :key="index">
                         <div class="dropdown-item-text text-nowrap text-right">
                             <span class="badge badge-pill badge-warning align-text-top mr-1">
                                 {{ item.qty }}
                             </span>
-                            {{ item.name }}
-                            <b>{{ item.price | currencyFormat }}</b>
+                            {{ item.product.name }}
+                            <b>{{ item.product.price * item.qty | currencyFormat }}</b>
+                            <a href="#" class="badge badge-danger text-white" @click.stop="deleteItem(index)">-</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +65,10 @@
                     <div class="col">
                         <h2>{{ item.name }}</h2>
                         <p>{{ item.description }}</p>
-                        <div class="h3">{{ item.price | currencyFormat }}</div>
+                        <!-- <div class="h3">{{ item.price | currencyFormat }}</div> -->
+                        <div class="h3">
+                            <price></price>
+                        </div>
                     </div>
                 </div>
             </div>

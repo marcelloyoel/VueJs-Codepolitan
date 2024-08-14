@@ -53,6 +53,17 @@
 // }
 
 
+Vue.component('price', {
+    data: function(){
+        return{
+            prefix: 'Rp',
+            value: 34.09,
+            precision:2
+        }
+    },
+    template: '<span>{{this.prefix + Number.parseFloat(this.value).toFixed(this.precision)}}</span>'
+});
+
 var app = new Vue({
     el: "#app",
     data: {
@@ -94,12 +105,50 @@ var app = new Vue({
             }, delay)
         },
         addItem: function(product){
-            this.cart.push(product);
+            // this.cart.push(product);
+            var productIndex;
+            var productExist = this.cart.filter(function(item, index){
+                if(item.product.id == Number(product.id)){
+                    productIndex = index;
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+            console.log(productExist);
+            if(productExist.length){
+                this.cart[productIndex].qty++;
+            }else{
+                this.cart.push({product: product, qty: 1});
+            }
+
+        },
+        deleteItem: function(key){
+            console.log(this.cart[key]);
+            if(this.cart[key].qty > 1){
+                this.cart[key].qty--;
+            }else{
+                this.cart.splice(key,1);
+            }
         }
     },
     computed:{
         sliderState: function(){
             return this.style.sliderStatus ? 'd-flex' : 'd-none'
+        },
+        cartTotal: function(){
+            let sum = 0;
+            for(key in this.cart){
+                sum = sum + (this.cart[key].product.price * this.cart[key].qty);
+            }
+            return sum;
+        },
+        cartQty: function(){
+            let qty = 0;
+            for(key in this.cart){
+                qty = qty + this.cart[key].qty;
+            }
+            return qty;
         }
     }
 });
