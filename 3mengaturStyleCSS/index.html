@@ -67,7 +67,7 @@
                         <p>{{ item.description }}</p>
                         <!-- <div class="h3">{{ item.price | currencyFormat }}</div> -->
                         <div class="h3">
-                            <price></price>
+                            <price :value="item.price" :prefix="'Rp. '" :precision="2"></price>
                         </div>
                     </div>
                 </div>
