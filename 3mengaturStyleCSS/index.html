@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/release/v5.7.0/css/all.css"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="app.css">
+    
+    <title>VueJS Basic</title>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <nav class="navbar navbar-light bg-light mb-3 fixed-top">
+            <div class="navbar-test ml-auto d-flex">
+                <button class="btn btn-sm btn-outline-success" @click="style.sliderStatus = !style.sliderStatus " >
+                    <i class="fas fa-dollar-sign"></i>
+                </button>
+                <div class="ml-2">
+                    <button class="btn btn-success btn-sm dropdown-toggle" id="dropdownCart123" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <b>cart:</b>
+                        <span class="badge badge-pill badge-success">{{ cart.length }}</span>
+                    </button>
+                </div>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownCart">
+                    <div v-for="(item, index) in cart" :key="index">
+                        <div class="dropdown-item-text text-nowrap text-right">
+                            <span class="badge badge-pill badge-warning align-text-top mr-1">
+                                {{ item.qty }}
+                            </span>
+                            {{ item.name }}
+                            <b>{{ item.price | currencyFormat }}</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <br>
+        <h1 class="mt-5">My Shop</h1>
+        <transition name="custom"  enter-active-class="animated fadeInDown" leave-active-class="animated slideOutRight">
+            <div v-if="style.sliderStatus" class="">
+                <div class="align-item-center" :class="sliderState">
+                    <label for="" :class="style.label">Max</label>
+                    <input type="number" class="form-controler mx-2" :style="{'width': style.inputWidth + 'px', 'text-align': 'center'}" v-model="maximum">
+                    <input type="range" name="" id="" min="0" max="350" class="custom-range" v-model="maximum">
+                </div>
+            </div>
+        </transition>
+
+        <transition-group name="fade" tag="div" @beforeEnter="before" @enter="enter" @leave="leave">
+            <div class="row d-none mb-3 align-items-center" v-for="(item, index) in products" :key="item.id" :data-index="index">
+    
+                <div v-if="item.price <= Number(maximum)">
+                    <div class="col-sm-1">
+                        <button class="btn btn-info" v-on:click="addItem(item)">+</button>
+                    </div>                
+                    <div class="col-sm-4">
+                        <img :src="item.image" :alt="item.name" class="img-fluid">
+                    </div>
+                    <div class="col">
+                        <h2>{{ item.name }}</h2>
+                        <p>{{ item.description }}</p>
+                        <div class="h3">{{ item.price | currencyFormat }}</div>
+                    </div>
+                </div>
+            </div>
+        </transition-group>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
