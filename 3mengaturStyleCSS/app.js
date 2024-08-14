@@ -130,7 +130,7 @@ var app = new Vue({
         .then(response => response.json())
         .then(data => {
             this.products = data;
-        });
+        }).catch(error => console.error('Error fetching products:', error)); // Add error handling
     },
     filters: {
         currencyFormat: function(value){
